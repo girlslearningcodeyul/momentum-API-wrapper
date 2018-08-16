@@ -28,7 +28,7 @@ With REST, it is done using GET methods against the endpoints:
 - /people/?search=
 
 In the first case a call to the /searchPeople request endpoint will result in the response of 10 people of the following layout format:
-`
+```
 {"results":[
     {"name":"Luke Skywalker",
     "height":"172",
@@ -56,9 +56,8 @@ In the first case a call to the /searchPeople request endpoint will result in th
     "created":"2014-12-09T13:50:51.644000Z",
     "edited":"2014-12-20T21:17:56.891000Z",
     "url":"https://swapi.co/api/people/1/"},
-
 ...]}
-`
+```
 
 The result is nested in the `results` object. Parsing the json file to display the names is done on the frontend.
 Similarly, for the planets and the starship calls. 
