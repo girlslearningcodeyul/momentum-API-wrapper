@@ -5,35 +5,31 @@ purpose: Momentum Travel Group Aptitude Test
 date: 12 August 2018
 */
 
-//TODO: how to deal with multiple pages of people, starships, 
-//and planets: all displayed at the same time, first page 
-//only (current) or arrow to move page-to-page?
+//TODO: integrating nextPage and previousPage promises to view the next page data, without creating additional endpoints
 
 //Dependencies
-const swapi = require('swapi-node'); //a nodeJS helper library: https://www.npmjs.com/package/swapi-node
 const express = require('express'); //express server
-var bodyParser = require('body-parser');
+const wrapper = require('./swapi-wrapper'); //node REST API wrapper 
+const bodyParser = require('body-parser');
 const app = express();
 
 app.use(express.static('public'));
 app.use(bodyParser.json({ type: 'application/json' }));
 
-var API_URL = 'http://swapi.co/api/';
-
-// //Get people endpoint
+//Get people endpoint 
 app.get('/searchPeople', (req, res) => {
-    swapi.get(API_URL + 'people/?page=').then((result) => {
-        var results = result.results;
+    wrapper.getPeople().then((result) => {
+        let results = result.results;
         res.send({ results });
     }).catch((err) => {
         console.log(err);
     });
-});
+})
 
 //Get planets endpoint
 app.get('/planets', (req, res) => {
-    swapi.get(API_URL + 'planets/?page=').then((result) => {
-        var results = result.results;
+    wrapper.getPlanets().then((result) => {
+        let results = result.results;
         res.send({ results });
     }).catch((err) => {
         console.log(err);
@@ -42,9 +38,8 @@ app.get('/planets', (req, res) => {
 
 //Get starships endpoint
 app.get('/starships', (req, res) => {
-
-    swapi.get(API_URL + 'starships/?page=').then((result) => {
-        var results = result.results;
+    wrapper.getStarships(1).then((result) => {
+        let results = result.results;
         res.send({ results });
     }).catch((err) => {
         console.log(err);
@@ -57,7 +52,7 @@ app.get('/starships', (req, res) => {
 app.get('/people', (req, res) => {
     let query = req.query.search;
     //console.log(query);
-    swapi.get(API_URL + 'people/?search=' + query).then((result) => {
+    wrapper.get('people/?search=' + query).then((result) => {
         //console.log(result.results);
         let results = result.results;
         res.send({ results });
