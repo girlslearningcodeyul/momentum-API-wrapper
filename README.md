@@ -7,8 +7,11 @@ This is a technical aptitude test submitted on 16 of August, 2018. The requireme
 
 Instructions
 Initialize npm and install the following dependencies
+
 $ npm init
+
 $ npm install express --save
+
 $ npm install body-parser --save
 
 $ nodemon server.js
